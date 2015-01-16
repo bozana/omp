@@ -45,6 +45,7 @@ class BrowseBlockSettingsForm extends Form {
 		$this->addCheck(new FormValidatorPost($this));
 
 		$this->setData('pluginName', $plugin->getName());
+		$this->setData('pluginJavaScriptURL', $plugin->getPluginPath());
 	}
 
 	//
