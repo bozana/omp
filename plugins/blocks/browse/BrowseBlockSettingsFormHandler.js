@@ -13,9 +13,8 @@
 (function($) {
 
 	/** @type {Object} */
-	$.pkp.plugins.blocks =
-		$.pkp.plugins.blocks || 
-		{ browse: { } };
+	$.pkp.plugins.blocks.browse =
+		$.pkp.plugins.blocks.browse || { };
 
 
 
@@ -38,6 +37,13 @@
 			$.pkp.controllers.form.AjaxFormHandler
 	);
 
-	
+
+	$.pkp.plugins.blocks.browse.BrowseBlockSettingsFormHandler.prototype.submitForm =
+			function(validator, formElement) {
+		this.parent('submitForm', validator, formElement);
+
+		// Cause the sidebar to reload, reflecting any changes.
+		$('body').trigger('updateSidebar');
+	};
 /** @param {jQuery} $ jQuery closure. */
 }(jQuery));

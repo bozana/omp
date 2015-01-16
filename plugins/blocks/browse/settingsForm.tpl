@@ -8,14 +8,14 @@
  * Browse block plugin settings
  *
  *}
-<script src="{$pluginJavaScriptURL}/BrowseBlockSettingsFormHandler.js"></script>
+<script src="{$baseUrl}/{$pluginJavaScriptPath}/BrowseBlockSettingsFormHandler.js"></script>
 <script>
 	$(function() {ldelim}
 		// Attach the form handler.
 		$('#browseBlockSettingsForm').pkpHandler('$.pkp.plugins.blocks.browse.BrowseBlockSettingsFormHandler');
 	{rdelim});
 </script>
---{$pluginJavaScriptURL}--
+--{$pluginJavaScriptPath}--
 <form class="pkp_form" id="browseBlockSettingsForm" method="post" action="{url router=$smarty.const.ROUTE_COMPONENT op="plugin" category="blocks" plugin=$pluginName verb="settings" save="true"}">
 	{include file="common/formErrors.tpl"}
 	{fbvFormArea id="browseBlockSettingsFormArea" class="border" title="plugins.block.browse.settings.title"}
