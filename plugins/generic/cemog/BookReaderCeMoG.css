@@ -1,0 +1,136 @@
+h3 {
+    font-size: 20px;
+    font-family: "Lucida Grande", "Verdana", "Arial", sans-serif;
+    font-weight: 200;
+    color: #333;
+    margin-bottom: 10px;
+}
+.BRfloatMeta h3 {
+    font-size: 1.1em;
+    font-weight: "7"00;
+    line-height: 1.5em;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    color: #333;
+}
+#BRtoolbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 40px;
+    padding: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: #ddd;
+    -webkit-box-shadow: 0 1px 3px #999;
+    overflow: hidden;
+}
+
+div#BRnav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    overflow: visible;
+    z-index: 100;
+    background-color: #ddd;
+    -webkit-box-shadow: 1px 1px 2px #333;
+    _position: absolute;
+    _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
+}
+.BRnavCntl {
+    background-color: #ddd;
+    position: absolute;
+    right: 20px;
+    width: 40px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.BRpagediv1up {
+    overflow: hidden;
+    cursor: move;
+    background-color: #f4f4f4;
+    -webkit-box-shadow: 1px 1px 2px #333;
+    -moz-box-shadow: 1px 1px 2px #333;
+    box-shadow: 1px 1px 2px #333;
+}
+
+.BRpagedivthumb {
+    background-color: #f4f4f4;
+    overflow:hidden;
+    -webkit-box-shadow: 1px 1px 2px #333;
+    -moz-box-shadow: 1px 1px 2px #333;
+    box-shadow: 1px 1px 2px #333;
+
+}
+
+.BRpageimage {
+    /* Bird Book */
+    background-color: #f4f4f4;
+}
+
+#BRreturn a {
+    font-size: 16px;
+    display: block;
+    color: #c00;
+    /* height: 18px; */
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+}
+
+#cboxContent {
+    background: #fff;
+    padding: 0;
+    border: 10px solid #666;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 0;
+    -moz-box-shadow: 1px 3px 10px #000;
+    -webkit-box-shadow: 1px 3px 10px #000;
+    box-shadow: 1px 3px 10px #000;
+}
+
+.BRfloat a {
+    color: #c00;
+}
+
+.BRfloat a:hover {
+    color: #666;
+}
+.BRfloat a.title {
+    color: #000;
+    text-decoration: none;
+}
+.BRfloat a.title:hover {
+    color: #666;
+    text-decoration: underline;
+}
+.BRfloatHead {
+    background-color: #666;
+    height: 30px;
+    line-height: 32px;
+    padding: 0 10px 10px 0;
+    font-family: "Lucida Grande", "Verdana", "Arial", sans-serif;
+    font-size: 1.5em;
+    font-weight: 200;
+    color: #fff;
+}
+
+.BRfloatBody {
+    float: left;
+    width: 570px;
+    padding: 15px 20px;
+    color: #333;
+}
+
+a.logo {
+    background: url("logo-romiosini-book-reader.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 40px;
+    margin: 0 5px;
+    width: 40px;
+}

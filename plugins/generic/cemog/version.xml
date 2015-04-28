@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE version SYSTEM "../../../lib/pkp/dtd/pluginVersion.dtd">
+
+<!--
+  * plugins/generic/cemog/version.xml
+  *
+ * Copyright (c) 2015 CeDiS, Freie Universität Berlin
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Plugin version information.
+  -->
+<version>
+	<application>cemog</application>
+	<type>plugins.generic</type>
+	<release>1.0.0.0</release>
+	<date>2015-04-24</date>
+	<lazy-load>1</lazy-load>
+	<class>CeMoGPlugin</class>
+</version>
