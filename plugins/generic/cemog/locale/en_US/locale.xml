@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/cemog/locale/en_US/locale.xml
+  *
+  * Copyright (c) 2015 CeDiS, Freie Universität Berlin
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.generic.cemog.name">CeMoG Plugin</message>
+	<message key="plugins.generic.cemog.description">The CeMoG Plugin implements all changes required by Edition Romiosini.</message>
+	<message key="plugins.generic.cemog.bookreader.name">BookReader Plugin</message>
+	<message key="plugins.generic.cemog.bookreader.description">This plugin integrates the Internet Archive BookReader.</message>
+	<message key="plugins.generic.cemog.bookreader.pluginMissing">The BookReader plugin is missing.</message>
+	<message key="plugins.generic.cemog.register.registerMessage"><![CDATA[<p>Der Buchkatalog der Edition Romiosini/CeMoG ist über die Online-Bibliothek frei zugänglich. Für die kostenlose Online-Lektüre der dort aufgeführten Publikationen ist eine Registrierung erforderlich. Vor der erstmaligen Nutzung des Bookreaders muss jede/r Nutzer/in sich mit einem Namen und einer Email-Adresse registrieren und die vorliegenden Nutzungsbedingungen anerkennen.</p><p><a href="{$loginUrl}">Klicken Sie hier</a>, wenn Sie bereits einen Login für die Nutzung der Online-Bibliothek haben.</p>]]></message>
+	<message key="plugins.generic.cemog.register.username">Wählen Sie einen Login (nur Kleinbuchstaben und Zahlen, keine Umlaute oder Leerzeichen) zu Ihrer Identifikation bei der Registrierung.</message>
+	<message key="plugins.generic.cemog.register.sendPassword"><![CDATA[Ja, ich möchte eine Bestätigungs-Email mit meinem Login und Passwort bekommen.]]></message>
+	<message key="plugins.generic.cemog.register.newsletter"><![CDATA[Ja, ich möchte mich für den <a href="http://www.cemog.fu-berlin.de/newsletter/newsletter-archiv/index.html" target="_blank">CeMoG-Newsletter</a> anmelden. Die Daten werden nicht an Dritte weitergegeben und ich kann mich jederzeit <a href="http://www.cemog.fu-berlin.de/newsletter/angaben-aktualisieren/index.html">abmelden</a>.]]></message>
+	<message key="plugins.generic.cemog.register.termsOfUse"><![CDATA[<span class="req">*</span> Ja, ich habe die <a href="{$termsUrl}" target="_blank">Nutzungsbedingungen</a> für Online-Bibliothek der Edition Romiosini/CeMoG gelesen und akzeptiert.]]></message>
+	<message key="plugins.generic.cemog.login.loginMessage">Romiosini login message...</message>
+	<message key="plugins.generic.cemog.localNav.newsletter">Newsletter</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata">Additional Metadata</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.printOnDemand">Print On Demand URL</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.orderEbook">eBook order URL</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.reviews">Reviews</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.pressMaterial">Press material</message>
+	<message key="plugins.generic.cemog.book.readOnline">Read online</message>
+	<message key="plugins.generic.cemog.book.printOnDemand">Print on Demand</message>
+	<message key="plugins.generic.cemog.book.orderEbook">Order eBook</message>
+	<message key="plugins.generic.cemog.book.Reviews">Reviews</message>
+	<message key="plugins.generic.cemog.book.pressMaterial">Press material</message>
+</locale>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/cemog/locale/de_DE/locale.xml
+  *
+  * Copyright (c) 2015 CeDiS, Freie Universität Berlin
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings
+  -->
+ 
+<locale name="de_DE" full_name="Deutsch (Deutschland)">
+	<message key="plugins.generic.cemog.name">CeMoG-Plug-In</message>
+	<message key="plugins.generic.cemog.description">CeMoG-Plug-In implementiert alle Anforderungen von der Edition Romiosini.</message>
+	<message key="plugins.generic.cemog.bookreader.name">BookReader-Plug-In</message>
+	<message key="plugins.generic.cemog.bookreader.description">Dieses Plug-In integriert die Software BookReader von Internet Archive.</message>
+	<message key="plugins.generic.cemog.bookreader.pluginMissing">BookReader-Plug-In fehlt.</message>
+	<message key="plugins.generic.cemog.register.username">Wählen Sie einen Login (nur Kleinbuchstaben und Zahlen, keine Umlaute oder Leerzeichen) zu Ihrer Identifikation bei der Registrierung.</message>
+	<message key="plugins.generic.cemog.register.registerMessage"><![CDATA[<p>Der Buchkatalog der Edition Romiosini/CeMoG ist über die Online-Bibliothek frei zugänglich. Für die kostenlose Online-Lektüre der dort aufgeführten Publikationen ist eine Registrierung erforderlich. Vor der erstmaligen Nutzung des Bookreaders muss jede/r Nutzer/in sich mit einem Namen und einer Email-Adresse registrieren und die vorliegenden Nutzungsbedingungen anerkennen.</p><p><a href="{$loginUrl}">Klicken Sie hier</a>, wenn Sie bereits einen Login für die Nutzung der Online-Bibliothek haben.</p>]]></message>
+	<message key="plugins.generic.cemog.register.sendPassword"><![CDATA[Ja, ich möchte eine Bestätigungs-Email mit meinem Login und Passwort bekommen.]]></message>
+	<message key="plugins.generic.cemog.register.newsletter"><![CDATA[Ja, ich möchte mich für den <a href="http://www.cemog.fu-berlin.de/newsletter/newsletter-archiv/index.html" target="_blank">CeMoG-Newsletter</a> anmelden. Die Daten werden nicht an Dritte weitergegeben und ich kann mich jederzeit <a href="http://www.cemog.fu-berlin.de/newsletter/angaben-aktualisieren/index.html">abmelden</a>.]]></message>
+	<message key="plugins.generic.cemog.register.termsOfUse"><![CDATA[<span class="req">*</span> Ja, ich habe die <a href="http://bibliothek.edition-romiosini.de/nutzungsbedingungen" target="_blank">Nutzungsbedingungen</a> für Online-Bibliothek der Edition Romiosini/CeMoG gelesen und akzeptiert.]]></message>
+	<message key="plugins.generic.cemog.login.loginMessage">Melden Sie sich mit Ihrem Benutzernamen und Ihrem Passwort an, um die Bücher der Edition Romiosini kostenlos zu lesen.</message>
+	<message key="plugins.generic.cemog.localNav.newsletter">Newsletter</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata">Zusätzliche Metadaten</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.printOnDemand">Print-On-Demand-URL</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.orderEbook">eBook-Bestellen-URL</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.reviews">Rezensionen</message>
+	<message key="plugins.generic.cemog.submission.additionalMetadata.pressMaterial">Pressematerialien</message>
+	<message key="plugins.generic.cemog.book.readOnline">Online lesen</message>
+	<message key="plugins.generic.cemog.book.printOnDemand">Printversion erwerben</message>
+	<message key="plugins.generic.cemog.book.orderEbook">E-Book erwerben</message>
+	<message key="plugins.generic.cemog.book.Reviews">Rezensionen</message>
+	<message key="plugins.generic.cemog.book.pressMaterial">Pressematerialien</message>
+	<message key="plugins.generic.cemog.about.aboutOMPSite"><![CDATA[Diese Online-Bibliothek verwendet Open Monograph Press {$ompVersion}, eine Open-Source-Software, die vom <a href="http://pkp.sfu.ca/">Public Knowledge Project</a> unter der GNU General Public License entwickelt wurde. Support und Vertrieb der Software sind kostenfrei.]]></message>
+</locale>
