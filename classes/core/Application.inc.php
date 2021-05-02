@@ -22,28 +22,38 @@ use APP\publicationFormat\PublicationFormatDAO;
 use PKP\core\PKPApplication;
 use PKP\db\DAORegistry;
 
-define('REQUIRES_XSL', true);
-
-define('ASSOC_TYPE_MONOGRAPH', PKPApplication::ASSOC_TYPE_SUBMISSION);
-define('ASSOC_TYPE_PUBLICATION_FORMAT', PKPApplication::ASSOC_TYPE_REPRESENTATION);
-
-define('ASSOC_TYPE_PRESS', 0x0000200);
-define('ASSOC_TYPE_SERIES', PKPApplication::ASSOC_TYPE_SECTION);
-
-define('ASSOC_TYPE_CHAPTER', 0x0000214);
-
-define('METRIC_TYPE_COUNTER', 'omp::counter');
 
 class Application extends \PKP\core\PKPApplication
 {
+    public const ASSOC_TYPE_MONOGRAPH = PKPApplication::ASSOC_TYPE_SUBMISSION;
+    public const ASSOC_TYPE_PUBLICATION_FORMAT = PKPApplication::ASSOC_TYPE_REPRESENTATION;
+    public const ASSOC_TYPE_PRESS = 0x0000200;
+    public const ASSOC_TYPE_SERIES = PKPApplication::ASSOC_TYPE_SECTION;
+    public const ASSOC_TYPE_CHAPTER = 0x0000214;
+    public const REQUIRES_XSL = true;
+
     /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
-        if (!PKP_STRICT_MODE && !class_exists('\Application')) {
-            class_alias('\APP\core\Application', '\Application');
+        if (!PKP_STRICT_MODE) {
+            foreach ([
+                'REQUIRES_XSL',
+                'ASSOC_TYPE_MONOGRAPH',
+                'ASSOC_TYPE_PUBLICATION_FORMAT',
+                'ASSOC_TYPE_PRESS',
+                'ASSOC_TYPE_SERIES',
+                'ASSOC_TYPE_CHAPTER',
+            ] as $constantName) {
+                if (!defined($constantName)) {
+                    define($constantName, constant('self::' . $constantName));
+                }
+            }
+            if (!class_exists('\Application')) {
+                class_alias('\APP\core\Application', '\Application');
+            }
         }
     }
 
