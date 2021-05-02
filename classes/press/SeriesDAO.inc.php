@@ -270,7 +270,6 @@ class SeriesDAO extends PKPSectionDAO
      */
     public function getByContextId($pressId, $rangeInfo = null, $submittableOnly = false, $withPublicationsOnly = false)
     {
-
         $params = [(int) $pressId];
         if ($withPublicationsOnly) {
             $params[] = PKPSubmission::STATUS_PUBLISHED;
@@ -283,7 +282,6 @@ class SeriesDAO extends PKPSectionDAO
                 WHERE s.press_id = ?
                 ' . ($submittableOnly ? ' AND s.editor_restricted = 0' : '') . '
                 ' . ($withPublicationsOnly ? ' AND  p.status = ?' : '') . '
-                GROUP BY s.series_id
                 ORDER BY s.seq',
             $params,
             $rangeInfo
