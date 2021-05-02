@@ -16,11 +16,11 @@
 
 import('classes.handler.Handler');
 
-use PKP\linkAction\LinkAction;
+use APP\events\UsageEvent;
+
+use APP\template\TemplateManager;
+
 use PKP\submission\PKPSubmission;
-
-use \APP\template\TemplateManager;
-
 
 class CatalogBookHandler extends Handler
 {
@@ -210,7 +210,11 @@ class CatalogBookHandler extends Handler
 
         // Display
         if (!HookRegistry::call('CatalogBookHandler::book', [&$request, &$submission])) {
-            return $templateMgr->display('frontend/pages/book.tpl');
+            $templateMgr->display('frontend/pages/book.tpl');
+            if (!$request->isDNTSet()) {
+                event(new UsageEvent($submission->getContextId(), $submission->getId()));
+            }
+            return;
         }
     }
 
@@ -336,6 +340,12 @@ class CatalogBookHandler extends Handler
             if (HookRegistry::call('CatalogBookHandler::download', [&$this, &$submission, &$publicationFormat, &$submissionFile, &$inline])) {
                 // If the plugin handled the hook, prevent further default activity.
                 exit();
+            }
+
+            // if the file is a publication format file (i.e. not a dependent file e.g. CSS or images),
+            // and Do Not Track is not set, fire an usage event.
+            if ($submissionFile->getData('assocId') == $publicationFormat->getId() && !$request->isDNTSet()) {
+                event(new UsageEvent($submission->getContextId(), $submission->getId(), $publicationFormat->getId(), $submissionFile->getData('fileId')));
             }
             $returner = true;
             HookRegistry::call('FileManager::downloadFileFinished', [&$returner]);
