@@ -1159,3 +1159,6 @@ msgstr "Validate Email (Press Registration)"
 
 msgid "mailable.validateEmailContext.description"
 msgstr "This email is automatically sent to a new user when they register with the press when the settings require the email address to be validated."
+
+msgid "manager.institutions.noContext"
+msgstr "This institution's press could not be found."
