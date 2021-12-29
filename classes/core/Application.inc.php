@@ -22,7 +22,6 @@ use APP\publicationFormat\PublicationFormatDAO;
 use PKP\core\PKPApplication;
 use PKP\db\DAORegistry;
 
-
 class Application extends \PKP\core\PKPApplication
 {
     public const ASSOC_TYPE_MONOGRAPH = PKPApplication::ASSOC_TYPE_SUBMISSION;
@@ -142,6 +141,12 @@ class Application extends \PKP\core\PKPApplication
             'SeriesDAO' => 'APP\press\SeriesDAO',
             'SpotlightDAO' => 'APP\spotlight\SpotlightDAO',
             'SubjectDAO' => 'APP\codelist\SubjectDAO',
+            'UsageStatsTotalTemporaryRecordDAO' => 'APP\statistics\UsageStatsTotalTemporaryRecordDAO',
+            'UsageStatsUniqueItemInvestigationsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueItemInvestigationsTemporaryRecordDAO',
+            'UsageStatsUniqueItemRequestsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueItemRequestsTemporaryRecordDAO',
+            'UsageStatsUniqueTitleInvestigationsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueTitleInvestigationsTemporaryRecordDAO',
+            'UsageStatsUniqueTitleRequestsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueTitleRequestsTemporaryRecordDAO',
+
         ]);
     }
 

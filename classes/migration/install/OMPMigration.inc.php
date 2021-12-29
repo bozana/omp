@@ -301,7 +301,6 @@ class OMPMigration extends \PKP\migration\Migration
      */
     public function down(): void
     {
-        Schema::drop('completed_payments');
         Schema::drop('identification_codes');
         Schema::drop('publication_dates');
         Schema::drop('sales_rights');
