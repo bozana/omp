@@ -1076,6 +1076,36 @@ msgstr "Please select the category to which you would like this menu item to lin
 msgid "grid.series.urlWillBe"
 msgstr "The series's URL will be: {$sampleUrl}"
 
+msgid "stats.totalBookDownloads"
+msgstr "Total Book Downloads"
+
+msgid "stats.totalBookViews"
+msgstr "Total Book Views"
+
+msgid "stats.uniqueBookDownloads"
+msgstr "Unique Book Downloads"
+
+msgid "stats.uniqueBookViews"
+msgstr "Unique Book Views"
+
+msgid "stats.totalChapterDownloads"
+msgstr "Total Chapter Downloads"
+
+msgid "stats.totalChapterViews"
+msgstr "Total Chapter Views"
+
+msgid "stats.uniqueChapterDownloads"
+msgstr "Unique Chapter Downloads"
+
+msgid "stats.uniqueChapterViews"
+msgstr "Unique Chapter Views"
+
+msgid "stats.uniqueTitleDownloads"
+msgstr "Unique Title Downloads"
+
+msgid "stats.uniqueTitleViews"
+msgstr "Unique Title Views"
+
 msgid "stats.publicationStats"
 msgstr "Monograph Stats"
 

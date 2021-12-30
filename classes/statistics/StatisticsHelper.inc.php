@@ -16,6 +16,7 @@
 
 namespace APP\statistics;
 
+use APP\core\Application;
 use PKP\statistics\PKPStatisticsHelper;
 
 class StatisticsHelper extends PKPStatisticsHelper
@@ -23,34 +24,68 @@ class StatisticsHelper extends PKPStatisticsHelper
     // Give an OMP name to the section dimension.
     public const STATISTICS_DIMENSION_SERIES_ID = self::STATISTICS_DIMENSION_PKP_SECTION_ID;
 
+    // Metrics:
+    public const STATISTICS_METRIC_BOOK_INVESTIGATIONS = 'metric_book_investigations';
+    public const STATISTICS_METRIC_BOOK_INVESTIGATIONS_UNIQUE = 'metric_book_investigations_unique';
+    public const STATISTICS_METRIC_BOOK_REQUESTS = 'metric_book_requests';
+    public const STATISTICS_METRIC_BOOK_REQUESTS_UNIQUE = 'metric_book_requests_unique';
+    public const STATISTICS_METRIC_CHAPTER_INVESTIGATIONS = 'metric_chapter_investigations';
+    public const STATISTICS_METRIC_CHAPTER_INVESTIGATIONS_UNIQUE = 'metric_chapter_investigations_unique';
+    public const STATISTICS_METRIC_CHAPTER_REQUESTS = 'metric_chapter_requests';
+    public const STATISTICS_METRIC_CHAPTER_REQUESTS_UNIQUE = 'metric_chapter_requests_unique';
+    public const STATISTICS_METRIC_TITLE_INVESTIGATIONS_UNIQUE = 'metric_title_investigations_unique';
+    public const STATISTICS_METRIC_TITLE_REQUESTS_UNIQUE = 'metric_title_requests_unique';
+    public const STATISTICS_METRIC_TOTAL_ORDERBY = self::STATISTICS_METRIC_TITLE_INVESTIGATIONS_UNIQUE;
+
     /**
-     * @see PKPStatisticsHelper::getAppColumnTitle()
+     * COUNTER DB tables metrics columns
      */
-    protected function getAppColumnTitle($column)
+    public static function getCounterMetricsColumns(): array
     {
-        switch ($column) {
-            case PKPStatisticsHelper::STATISTICS_DIMENSION_SUBMISSION_ID:
-                return __('submission.monograph');
-            case self::STATISTICS_DIMENSION_SERIES_ID:
-                return __('series.series');
-            case PKPStatisticsHelper::STATISTICS_DIMENSION_CONTEXT_ID:
-                return __('context.context');
-            default:
-                assert(false);
-        }
+        return [
+            self::STATISTICS_METRIC_BOOK_INVESTIGATIONS,
+            self::STATISTICS_METRIC_BOOK_INVESTIGATIONS_UNIQUE,
+            self::STATISTICS_METRIC_BOOK_REQUESTS,
+            self::STATISTICS_METRIC_BOOK_REQUESTS_UNIQUE,
+            self::STATISTICS_METRIC_CHAPTER_INVESTIGATIONS,
+            self::STATISTICS_METRIC_CHAPTER_INVESTIGATIONS_UNIQUE,
+            self::STATISTICS_METRIC_CHAPTER_REQUESTS,
+            self::STATISTICS_METRIC_CHAPTER_REQUESTS_UNIQUE,
+            self::STATISTICS_METRIC_TITLE_INVESTIGATIONS_UNIQUE,
+            self::STATISTICS_METRIC_TITLE_REQUESTS_UNIQUE
+        ];
+    }
+
+    /**
+     * Get report column names, for JSON keys as well as translations used in CSV reports
+     */
+    public static function getReportMetricsColumnNames(): array
+    {
+        return [
+            self::STATISTICS_METRIC_BOOK_INVESTIGATIONS => 'totalBookViews',
+            self::STATISTICS_METRIC_BOOK_REQUESTS => 'totalBookDownloads',
+            self::STATISTICS_METRIC_CHAPTER_INVESTIGATIONS => 'totalChapterViews',
+            self::STATISTICS_METRIC_CHAPTER_REQUESTS => 'totalChapterDownloads',
+            self::STATISTICS_METRIC_BOOK_INVESTIGATIONS_UNIQUE => 'uniqueBookViews',
+            self::STATISTICS_METRIC_BOOK_REQUESTS_UNIQUE => 'uniqueBookDownloads',
+            self::STATISTICS_METRIC_CHAPTER_INVESTIGATIONS_UNIQUE => 'uniqueChapterViews',
+            self::STATISTICS_METRIC_CHAPTER_REQUESTS_UNIQUE => 'uniqueChapterDownloads',
+            self::STATISTICS_METRIC_TITLE_INVESTIGATIONS_UNIQUE => 'uniqueTitleViews',
+            self::STATISTICS_METRIC_TITLE_REQUESTS_UNIQUE => 'uniqueTitleDownloads'
+        ];
     }
 
     /**
      * @see PKPStatisticsHelper::getReportObjectTypesArray()
      */
-    protected function getReportObjectTypesArray()
+    protected function getReportObjectTypesArray(): array
     {
         $objectTypes = parent::getReportObjectTypesArray();
         $objectTypes = $objectTypes + [
-            ASSOC_TYPE_PRESS => __('context.context'),
-            ASSOC_TYPE_SERIES => __('series.series'),
-            ASSOC_TYPE_MONOGRAPH => __('submission.monograph'),
-            ASSOC_TYPE_PUBLICATION_FORMAT => __('grid.catalogEntry.publicationFormatType')
+            Application::ASSOC_TYPE_PRESS => __('context.context'),
+            Application::ASSOC_TYPE_SERIES => __('series.series'),
+            Application::ASSOC_TYPE_MONOGRAPH => __('submission.monograph'),
+            Application::ASSOC_TYPE_PUBLICATION_FORMAT => __('grid.catalogEntry.publicationFormatType')
         ];
 
         return $objectTypes;
