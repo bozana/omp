@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file api/v1/stats/StatsPublicationHandler.inc.php
+ * @file api/v1/stats/publications/StatsPublicationHandler.inc.php
  *
  * Copyright (c) 2014-2021 Simon Fraser University
  * Copyright (c) 2003-2021 John Willinsky
@@ -18,6 +18,6 @@ import('lib.pkp.api.v1.stats.publications.PKPStatsPublicationHandler');
 
 class StatsPublicationHandler extends PKPStatsPublicationHandler
 {
-    /** @var string The name of the section ids query param for this application */
-    public $sectionIdsQueryParam = 'seriesIds';
+    /** The name of the section ids query param for this application */
+    public string $sectionIdsQueryParam = 'seriesIds';
 }
