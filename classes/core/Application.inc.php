@@ -141,6 +141,12 @@ class Application extends \PKP\core\PKPApplication
             'SeriesDAO' => 'APP\press\SeriesDAO',
             'SpotlightDAO' => 'APP\spotlight\SpotlightDAO',
             'SubjectDAO' => 'APP\codelist\SubjectDAO',
+            'UsageStatsTotalTemporaryRecordDAO' => 'APP\statistics\UsageStatsTotalTemporaryRecordDAO',
+            'UsageStatsUniqueItemInvestigationsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueItemInvestigationsTemporaryRecordDAO',
+            'UsageStatsUniqueItemRequestsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueItemRequestsTemporaryRecordDAO',
+            'UsageStatsUniqueTitleInvestigationsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueTitleInvestigationsTemporaryRecordDAO',
+            'UsageStatsUniqueTitleRequestsTemporaryRecordDAO' => 'APP\statistics\UsageStatsUniqueTitleRequestsTemporaryRecordDAO',
+
         ]);
     }
 
