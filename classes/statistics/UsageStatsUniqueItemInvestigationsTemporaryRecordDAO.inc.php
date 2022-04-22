@@ -121,7 +121,7 @@ class UsageStatsUniqueItemInvestigationsTemporaryRecordDAO
             ";
         if (substr(Config::getVar('database', 'driver'), 0, strlen('postgres')) === 'postgres') {
             $metricBookInvestigationsUniqueUpsertSql .= '
-                ON CONFLICT ON CONSTRAINT metrics_submission_daily_uc_load_id_context_id_submission_id_date DO UPDATE
+                ON CONFLICT ON CONSTRAINT msd_uc_load_id_context_id_submission_id_date DO UPDATE
                 SET metric_book_investigations_unique = excluded.metric_book_investigations_unique;
                 ';
         } else {
@@ -142,7 +142,7 @@ class UsageStatsUniqueItemInvestigationsTemporaryRecordDAO
             ";
         if (substr(Config::getVar('database', 'driver'), 0, strlen('postgres')) === 'postgres') {
             $metricChapterInvestigationsUniqueUpsertSql .= '
-                ON CONFLICT ON CONSTRAINT metrics_submission_daily_uc_load_id_context_id_submission_id_date DO UPDATE
+                ON CONFLICT ON CONSTRAINT msd_uc_load_id_context_id_submission_id_date DO UPDATE
                 SET metric_chapter_investigations_unique = excluded.metric_chapter_investigations_unique;
                 ';
         } else {
@@ -171,7 +171,7 @@ class UsageStatsUniqueItemInvestigationsTemporaryRecordDAO
             ";
         if (substr(Config::getVar('database', 'driver'), 0, strlen('postgres')) === 'postgres') {
             $metricBookInvestigationsUniqueUpsertSql .= '
-                ON CONFLICT ON CONSTRAINT metrics_institution_daily_uc_load_id_context_id_submission_id_institution_id_date DO UPDATE
+                ON CONFLICT ON CONSTRAINT msid_uc_load_id_context_id_submission_id_institution_id_date DO UPDATE
                 SET metric_book_investigations_unique = excluded.metric_book_investigations_unique;
                 ';
         } else {
@@ -192,7 +192,7 @@ class UsageStatsUniqueItemInvestigationsTemporaryRecordDAO
             ";
         if (substr(Config::getVar('database', 'driver'), 0, strlen('postgres')) === 'postgres') {
             $metricChapterInvestigationsUniqueUpsertSql .= '
-                ON CONFLICT ON CONSTRAINT metrics_institution_daily_uc_load_id_context_id_submission_id_institution_id_date DO UPDATE
+                ON CONFLICT ON CONSTRAINT msid_uc_load_id_context_id_submission_id_institution_id_date DO UPDATE
                 SET metric_chapter_investigations_unique = excluded.metric_chapter_investigations_unique;
                 ';
         } else {
