@@ -123,8 +123,10 @@ class I6782_Metrics extends Migration
         }
 
         $dayFormatSql = "DATE_FORMAT(STR_TO_DATE(m.day, '%Y%m%d'), '%Y-%m-%d')";
+        $bigIntCast = 'UNSIGNED';
         if (substr(Config::getVar('database', 'driver'), 0, strlen('postgres')) === 'postgres') {
             $dayFormatSql = "to_date(m.day, 'YYYYMMDD')";
+            $bigIntCast = 'BIGINT';
         }
         // Requires the new DB metrics tables
         // The not existing foreign keys should already be removed in PreflightCheckStatsMigration
@@ -137,14 +139,14 @@ class I6782_Metrics extends Migration
         DB::statement("INSERT INTO metrics_submission (load_id, context_id, submission_id, chapter_id, representation_id, submission_file_id, file_type, assoc_type, date, metric) SELECT m.load_id, m.context_id, m.assoc_id, null, null, null, null, m.assoc_type, {$dayFormatSql}, m.metric FROM metrics m WHERE m.assoc_type = 1048585 AND m.metric_type = 'omp::counter'");
         DB::statement("
                 INSERT INTO metrics_submission (load_id, context_id, submission_id, chapter_id, representation_id, submission_file_id, file_type, assoc_type, date, metric)
-                SELECT m.load_id, m.context_id, m.submission_id, CAST(sfs.setting_value AS BIGINT), m.representation_id, m.assoc_id, m.file_type, m.assoc_type, {$dayFormatSql}, m.metric
+                SELECT m.load_id, m.context_id, m.submission_id, CAST(sfs.setting_value AS {$bigIntCast}), m.representation_id, m.assoc_id, m.file_type, m.assoc_type, {$dayFormatSql}, m.metric
                 FROM metrics m
                 LEFT JOIN submission_file_settings sfs ON (m.assoc_type = 515 AND m.assoc_id = sfs.submission_file_id AND sfs.setting_name = 'chapterId')
                 WHERE m.assoc_type = 515 AND m.metric_type = 'omp::counter'
             ");
         DB::statement("
                 INSERT INTO metrics_submission (load_id, context_id, submission_id, chapter_id, representation_id, submission_file_id, file_type, assoc_type, date, metric)
-                SELECT m.load_id, m.context_id, m.submission_id, CAST(sfs.setting_value AS BIGINT), m.representation_id, m.assoc_id, m.file_type, m.assoc_type, {$dayFormatSql}, m.metric
+                SELECT m.load_id, m.context_id, m.submission_id, CAST(sfs.setting_value AS  {$bigIntCast}), m.representation_id, m.assoc_id, m.file_type, m.assoc_type, {$dayFormatSql}, m.metric
                 FROM metrics m
                 LEFT JOIN submission_file_settings sfs ON (m.assoc_type = 531 AND m.assoc_id = sfs.submission_file_id AND sfs.setting_name = 'chapterId')
                 WHERE m.assoc_type = 531 AND m.metric_type = 'omp::counter'
