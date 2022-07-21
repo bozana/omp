@@ -34,15 +34,25 @@ class Usage
 
     public function __construct(int $assocType, Context $context, Submission $submission = null, Representation $publicationFormat = null, SubmissionFile $submissionFile = null, Chapter $chapter = null, Series $series = null)
     {
-        $this->constructUsageEvent($assocType, $context, $submission, $publicationFormat, $submissionFile);
+        $this->chapter = $chapter;
+        $this->series = $series;
+        $this->traitConstruct($assocType, $context, $submission, $publicationFormat, $submissionFile);
+    }
 
-        if (in_array($assocType, [Application::ASSOC_TYPE_CHAPTER, Application::ASSOC_TYPE_SERIES, Application::ASSOC_TYPE_PRESS])) {
+    /**
+     * Get the canonical URL for the usage object
+     *
+     * @throws Exception
+     */
+    protected function getCanonicalUrl(): string
+    {
+        if (in_array($this->assocType, [Application::ASSOC_TYPE_CHAPTER, Application::ASSOC_TYPE_SERIES, Application::ASSOC_TYPE_PRESS])) {
             $canonicalUrlPage = $canonicalUrlOp = null;
             $canonicalUrlParams = [];
-            switch ($assocType) {
+            switch ($this->assocType) {
                 case Application::ASSOC_TYPE_CHAPTER:
                     $canonicalUrlOp = 'book';
-                    $canonicalUrlParams = [$submission->getId()];
+                    $canonicalUrlParams = [$this->submission->getId()];
                     $router = $this->request->getRouter(); /** @var PageRouter $router */
                     $op = $router->getRequestedOp($this->request);
                     $args = $router->getRequestedArgs($this->request);
@@ -57,7 +67,7 @@ class Usage
                         }
                         if ($subPath === 'chapter') {
                             $canonicalUrlParams[] = 'chapter';
-                            $canonicalUrlParams[] = $chapter->getId();
+                            $canonicalUrlParams[] = $this->chapter->getId();
                         }
                     }
                     break;
@@ -77,9 +87,9 @@ class Usage
                     break;
             }
             $canonicalUrl = $this->getCanonicalUrl($this->request, $canonicalUrlPage, $canonicalUrlOp, $canonicalUrlParams);
-            $this->canonicalUrl = $canonicalUrl;
+            return $canonicalUrl;
+        } else {
+            return $this->getTraitCanonicalUrl();
         }
-        $this->chapter = $chapter;
-        $this->series = $series;
     }
 }

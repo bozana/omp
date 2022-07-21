@@ -13,12 +13,19 @@
 
 namespace APP\migration\upgrade\v3_4_0;
 
-use APP\core\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class I6782_OrphanedMetrics extends \PKP\migration\upgrade\v3_4_0\I6782_OrphanedMetrics
 {
+    private const ASSOC_TYPE_CONTEXT = 0x0000200;
+    private const ASSOC_TYPE_SERIES = 0x0000212;
+
+    protected function getContextAssocType(): int
+    {
+        return self::ASSOC_TYPE_CONTEXT;
+    }
+
     protected function getContextTable(): string
     {
         return 'presses';
@@ -50,9 +57,9 @@ class I6782_OrphanedMetrics extends \PKP\migration\upgrade\v3_4_0\I6782_Orphaned
 
         // Clean orphaned series IDs
         // as assoc_id
-        $orphanedIds = DB::table('metrics AS m')->leftJoin('series AS s', 'm.assoc_id', '=', 's.series_id')->where('m.assoc_type', '=', Application::ASSOC_TYPE_SERIES)->whereNull('s.series_id')->distinct()->pluck('m.assoc_id');
-        $orphandedSeries = DB::table('metrics')->select('*')->where('assoc_type', '=', Application::ASSOC_TYPE_SERIES)->whereIn('assoc_id', $orphanedIds);
+        $orphanedIds = DB::table('metrics AS m')->leftJoin('series AS s', 'm.assoc_id', '=', 's.series_id')->where('m.assoc_type', '=', self::ASSOC_TYPE_SERIES)->whereNull('s.series_id')->distinct()->pluck('m.assoc_id');
+        $orphandedSeries = DB::table('metrics')->select($metricsColumns)->where('assoc_type', '=', self::ASSOC_TYPE_SERIES)->whereIn('assoc_id', $orphanedIds);
         DB::table('metrics_tmp')->insertUsing($metricsColumns, $orphandedSeries);
-        DB::table('metrics')->where('assoc_type', '=', Application::ASSOC_TYPE_SERIES)->whereIn('assoc_id', $orphanedIds)->delete();
+        DB::table('metrics')->where('assoc_type', '=', self::ASSOC_TYPE_SERIES)->whereIn('assoc_id', $orphanedIds)->delete();
     }
 }
