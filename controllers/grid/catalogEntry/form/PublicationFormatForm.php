@@ -30,6 +30,7 @@ use Exception;
 use PKP\core\Core;
 use PKP\core\PKPApplication;
 use PKP\db\DAORegistry;
+use PKP\facades\Locale;
 use PKP\form\Form;
 
 class PublicationFormatForm extends Form
@@ -60,6 +61,27 @@ class PublicationFormatForm extends Form
         $this->addCheck(new \PKP\form\validation\FormValidatorRegExp($this, 'urlPath', 'optional', 'validator.alpha_dash_period', '/^[a-zA-Z0-9]+([\\.\\-_][a-zA-Z0-9]+)*$/'));
         $this->addCheck(new \PKP\form\validation\FormValidatorPost($this));
         $this->addCheck(new \PKP\form\validation\FormValidatorCSRF($this));
+
+        // Ensure a locale is provided and valid:
+        // Publication format locale can be one of the context's supported submission locales, as well as
+        // the existing monograph locale or the existing local of this publication format.
+        $locales = collect(Application::get()->getRequest()->getContext()->getSupportedSubmissionLocales())
+            ->concat([$monograph->getData('locale')])
+            ->concat([$publicationFormat?->getData('locale')])
+            ->flatten()
+            ->filter()
+            ->unique()
+            ->values()
+            ->toArray();
+        $this->addCheck(
+            new \PKP\form\validation\FormValidatorCustom(
+                $this,
+                'locale',
+                'required',
+                'grid.catalogEntry.publicationFormatLocaleRequired',
+                fn ($locale) => in_array($locale, $locales)
+            )
+        );
     }
 
     //
@@ -158,6 +180,7 @@ class PublicationFormatForm extends Form
                 'isbn13' => $isbn13,
                 'remoteURL' => $format->getData('urlRemote'),
                 'urlPath' => $format->getData('urlPath'),
+                'locale' => $format->getLocale(),
             ];
         } else {
             $this->setData('entryKey', 'DA');
@@ -182,6 +205,20 @@ class PublicationFormatForm extends Form
             $templateMgr->assign('representationId', $publicationFormat->getId());
         }
         $templateMgr->assign('publicationId', $this->getPublication()->getId());
+
+        // get supported submisison locales that can be chosen for this publication format locale
+        $supportedSubmissionLocales = collect(Application::get()->getRequest()->getContext()->getSupportedSubmissionLocales())
+            ->concat([$monograph->getData('locale')])
+            ->concat([$publicationFormat?->getData('locale')])
+            ->flatten()
+            ->filter()
+            ->unique()
+            ->values()
+            ->toArray();
+        ksort($supportedSubmissionLocales);
+        $supportedSubmissionLocaleNames = Locale::getSubmissionLocaleDisplayNames($supportedSubmissionLocales);
+        $templateMgr->assign('supportedSubmissionLocaleNames', $supportedSubmissionLocaleNames);
+
         return parent::fetch($request, $template, $display);
     }
 
@@ -200,6 +237,7 @@ class PublicationFormatForm extends Form
             'isbn13',
             'remoteURL',
             'urlPath',
+            'locale',
         ]);
     }
 
@@ -232,6 +270,7 @@ class PublicationFormatForm extends Form
         $publicationFormat->setPhysicalFormat($this->getData('isPhysicalFormat') ? true : false);
         $publicationFormat->setData('urlRemote', strlen($remoteUrl = (string) $this->getData('remoteURL')) ? $remoteUrl : null);
         $publicationFormat->setData('urlPath', strlen($urlPath = (string) $this->getData('urlPath')) ? $urlPath : null);
+        $publicationFormat->setData('locale', $this->getData('locale'));
         parent::execute(...$functionParams);
 
         if ($existingFormat) {

@@ -324,6 +324,7 @@ class PublicationFormatDAO extends DAO implements RepresentationDAOInterface
         $publicationFormat->setData('urlPath', $row['url_path']);
         $publicationFormat->setIsAvailable($row['is_available']);
         $publicationFormat->setData('doiId', $row['doi_id']);
+        $publicationFormat->setData('locale', $row['locale']);
 
         if (!empty($publicationFormat->getData('doiId'))) {
             $publicationFormat->setData('doiObject', Repo::doi()->get($publicationFormat->getData('doiId')));
@@ -356,9 +357,9 @@ class PublicationFormatDAO extends DAO implements RepresentationDAOInterface
     {
         $this->update(
             'INSERT INTO publication_formats
-                (is_approved, entry_key, physical_format, publication_id, seq, file_size, front_matter, back_matter, height, height_unit_code, width, width_unit_code, thickness, thickness_unit_code, weight, weight_unit_code, product_composition_code, product_form_detail_code, country_manufacture_code, imprint, product_availability_code, technical_protection_code, returnable_indicator_code, remote_url, url_path, is_available, doi_id)
+                (is_approved, entry_key, physical_format, publication_id, seq, file_size, front_matter, back_matter, height, height_unit_code, width, width_unit_code, thickness, thickness_unit_code, weight, weight_unit_code, product_composition_code, product_form_detail_code, country_manufacture_code, imprint, product_availability_code, technical_protection_code, returnable_indicator_code, remote_url, url_path, is_available, doi_id, locale)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 (int) $publicationFormat->getIsApproved(),
                 $publicationFormat->getEntryKey(),
@@ -386,7 +387,8 @@ class PublicationFormatDAO extends DAO implements RepresentationDAOInterface
                 $publicationFormat->getData('urlRemote'),
                 $publicationFormat->getData('urlPath'),
                 (int) $publicationFormat->getIsAvailable(),
-                $publicationFormat->getData('doiId') === null ? null : (int) $publicationFormat->getData('doiId')
+                $publicationFormat->getData('doiId') === null ? null : (int) $publicationFormat->getData('doiId'),
+                $publicationFormat->getData('locale'),
             ]
         );
 
@@ -430,7 +432,8 @@ class PublicationFormatDAO extends DAO implements RepresentationDAOInterface
                 remote_url = ?,
                 url_path = ?,
                 is_available = ?,
-                doi_id = ?
+                doi_id = ?,
+                locale = ?
             WHERE publication_format_id = ?',
             [
                 (int) $publicationFormat->getIsApproved(),
@@ -459,6 +462,7 @@ class PublicationFormatDAO extends DAO implements RepresentationDAOInterface
                 $publicationFormat->getData('urlPath'),
                 (int) $publicationFormat->getIsAvailable(),
                 $publicationFormat->getData('doiId'),
+                $publicationFormat->getData('locale'),
                 (int) $publicationFormat->getId()
             ]
         );

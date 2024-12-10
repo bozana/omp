@@ -190,6 +190,13 @@ class PublicationFormatGridHandler extends CategoryGridHandler
                 ['width' => 60, 'anyhtml' => true]
             )
         );
+        $this->addColumn(new GridColumn(
+            'language',
+            'common.language',
+            null,
+            null,
+            $this->_cellProvider
+        ));
         if ($this->_canManage) {
             $this->addColumn(
                 new GridColumn(

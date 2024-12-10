@@ -31,7 +31,7 @@
 		{if $downloadFile->getDirectSalesPrice() && $currency}{$downloadFile->getDirectSalesPrice()}
 			{translate key="payment.directSales.purchase" format=$publicationFormat->getLocalizedName() amount=$downloadFile->getDirectSalesPrice() currency=$currency->getLetterCode()}
 		{else}
-			{$publicationFormat->getLocalizedName()}
+			{$publicationFormat->getDisplayLabel()|escape}
 		{/if}
 	{/if}
 </a>

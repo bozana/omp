@@ -242,6 +242,7 @@ class CSVImportExportPlugin extends ImportExportPlugin
             $publicationFormat->setProductAvailabilityCode('20'); // ONIX code for Available.
             $publicationFormat->setEntryKey('DA'); // ONIX code for Digital
             $publicationFormat->setData('name', 'PDF', $submission->getData('locale'));
+            $publicationFormat->setData('locale', $submission->getData('locale'));
             $publicationFormat->setSequence(REALLY_BIG_NUMBER);
             $publicationFormatId = $publicationFormatDao->insertObject($publicationFormat);
 

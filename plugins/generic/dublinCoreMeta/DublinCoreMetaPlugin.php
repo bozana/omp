@@ -209,6 +209,7 @@ class DublinCoreMetaPlugin extends GenericPlugin
         $press = $request->getContext();
 
         $publicationLocale = $publication->getData('locale');
+        $publicationFormatLocale = $publicationFormat->getData('locale');
         $submissionBestId = strlen($urlPath = (string) $publication->getData('urlPath')) ? $urlPath : $monograph->getId();
 
         $templateMgr = TemplateManager::getManager($request);
@@ -235,7 +236,11 @@ class DublinCoreMetaPlugin extends GenericPlugin
 
         $authors = $chapter ? $chapter->getAuthors()->toArray() : $publication->getData('authors');
         foreach ($authors as $i => $author) {
-            $templateMgr->addHeader('dublinCoreAuthor' . $i++, '<meta name="DC.Creator.PersonalName" content="' . htmlspecialchars($author->getFullName(false, false, $publicationLocale)) . '"/>');
+            $authorPreferedLocale = $publicationFormatLocale;
+            if (!$author->getGivenName($authorPreferedLocale)) {
+                $authorPreferedLocale = $publicationLocale;
+            }
+            $templateMgr->addHeader('dublinCoreAuthor' . $i++, '<meta name="DC.Creator.PersonalName" content="' . htmlspecialchars($author->getFullName(false, false, $authorPreferedLocale)) . '"/>');
         }
 
         $datePublished = $chapter
@@ -278,9 +283,13 @@ class DublinCoreMetaPlugin extends GenericPlugin
 
         $templateMgr->addHeader('dublinCoreUri', '<meta name="DC.Identifier.URI" content="' . $request->getDispatcher()->url($request, Application::ROUTE_PAGE, null, 'catalog', 'book', [$submissionBestId, $publicationFormat->getId(), $submissionFile->getId()], urlLocaleForPage: '') . '"/>');
 
-        $templateMgr->addHeader('dublinCoreLanguage', '<meta name="DC.Language" scheme="ISO639-1" content="' . str_replace(['_', '@'], '-', $publicationLocale) . '"/>');
+        $templateMgr->addHeader('dublinCoreLanguage', '<meta name="DC.Language" scheme="ISO639-1" content="' . str_replace(['_', '@'], '-', $publicationFormatLocale) . '"/>');
 
-        if (($copyrightHolder = $publication->getData('copyrightHolder', $publicationLocale)) && ($copyrightYear = $publication->getData('copyrightYear'))) {
+        $copyrightHolderPreferedLocale = $publicationFormatLocale;
+        if (!$publication->getData('copyrightHolder', $copyrightHolderPreferedLocale)) {
+            $copyrightHolderPreferedLocale = $publicationLocale;
+        }
+        if (($copyrightHolder = $publication->getData('copyrightHolder', $copyrightHolderPreferedLocale)) && ($copyrightYear = $publication->getData('copyrightYear'))) {
             $templateMgr->addHeader('dublinCoreCopyright', '<meta name="DC.Rights" content="' . htmlspecialchars(__('submission.copyrightStatement', ['copyrightHolder' => $copyrightHolder, 'copyrightYear' => $copyrightYear])) . '"/>');
         }
         if ($licenseURL = $publication->getData('licenseUrl')) {
@@ -309,12 +318,16 @@ class DublinCoreMetaPlugin extends GenericPlugin
             }
         }
 
-
-        $title = $chapter ? $chapter->getLocalizedFullTitle($publicationLocale) : $publication->getLocalizedFullTitle($publicationLocale);
+        $titlePreferredLocale = $publicationFormatLocale;
+        $titleTmp = $chapter ? $chapter->getDate('title', $titlePreferredLocale) : $publication->getData('title', $titlePreferredLocale);
+        if (!$titleTmp) {
+            $titlePreferredLocale = $publicationLocale;
+        }
+        $title = $chapter ? $chapter->getLocalizedFullTitle($titlePreferredLocale) : $publication->getLocalizedFullTitle($titlePreferredLocale);
         $templateMgr->addHeader('dublinCoreTitle', '<meta name="DC.Title" content="' . htmlspecialchars($title) . '"/>');
         $titles = $chapter ? $chapter->getFullTitles() : $publication->getFullTitles();
         foreach ($titles as $locale => $altTitle) {
-            if ($title != '' && $locale != $publicationLocale) {
+            if ($title != '' && $locale != $titlePreferredLocale) {
                 $templateMgr->addHeader('dublinCoreAltTitle' . $locale, '<meta name="DC.Title.Alternative" xml:lang="' . htmlspecialchars(str_replace(['_', '@'], '-', $locale)) . '" content="' . htmlspecialchars($altTitle) . '"/>');
             }
         }

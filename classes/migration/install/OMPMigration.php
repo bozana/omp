@@ -74,6 +74,7 @@ class OMPMigration extends \PKP\migration\Migration
         Schema::create('publication_formats', function (Blueprint $table) {
             $table->comment('Publication formats are representations of a publication in a particular format, e.g. PDF, hardcover, etc. Each publication format may contain many chapters.');
             $table->bigInteger('publication_format_id')->autoIncrement();
+            $table->string('locale', 28)->nullable();
 
             $table->bigInteger('publication_id');
             $table->foreign('publication_id', 'publication_formats_publication_id')->references('publication_id')->on('publications')->onDelete('cascade');
