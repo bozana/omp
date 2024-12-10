@@ -23,6 +23,7 @@ use APP\core\Application;
 use APP\facades\Repo;
 use PKP\db\DAORegistry;
 use PKP\db\DAOResultFactory;
+use PKP\facades\Locale;
 use PKP\submission\Representation;
 use PKP\submissionFile\SubmissionFile;
 
@@ -662,6 +663,28 @@ class PublicationFormat extends Representation
         } else {
             parent::setStoredPubId($pubIdType, $pubId);
         }
+    }
+
+    /**
+     * Get display label that contains the publication format localized name and,
+     * in case when the publication format locale is different than the current UI language,
+     * also the publicaiton format language.
+     */
+    public function getDisplayLabel(): string
+    {
+        $label = $this->getLocalizedName();
+        if ($this->getLocale() && $this->getLocale() !== Locale::getLocale()) {
+            $label .= ' (' . \Locale::getDisplayLanguage($this->getLocale(), $this->getLocale()) . ')';
+        }
+        return $label;
+    }
+
+    /**
+     * Get multilingual properties
+     */
+    protected function getMultilingualProps(): array
+    {
+        return ['name'];
     }
 }
 

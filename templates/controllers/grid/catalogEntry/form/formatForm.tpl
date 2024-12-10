@@ -33,6 +33,9 @@
 			{fbvElement type="text" required="true" id="name" label="common.name" value=$name multilingual="true" size=$fbvStyles.size.MEDIUM inline=true}
 			{fbvElement type="select" label="grid.catalogEntry.publicationFormatType" from=$entryKeys selected=$entryKey id="entryKey" translate=false size=$fbvStyles.size.MEDIUM inline=true}
 		{/fbvFormSection}
+		{fbvFormSection}
+			{fbvElement type="select" id="locale" label="common.language" from=$supportedSubmissionLocaleNames selected=$locale|default:$formLocale size=$fbvStyles.size.MEDIUM translate=false inline=true required=true disabled=$formDisabled}
+		{/fbvFormSection}
 		{fbvFormSection for="publicationFormat" size=$fbvStyles.size.MEDIUM list=true}
 			{fbvElement type="checkbox" label="grid.catalogEntry.physicalFormat" id="isPhysicalFormat" checked=$isPhysicalFormat}
 		{/fbvFormSection}

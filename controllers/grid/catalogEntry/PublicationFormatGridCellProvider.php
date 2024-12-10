@@ -24,6 +24,7 @@ use PKP\controllers\grid\files\FileNameGridColumn;
 use PKP\controllers\grid\GridColumn;
 use PKP\controllers\grid\GridHandler;
 use PKP\controllers\grid\GridRow;
+use PKP\facades\Locale;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
 use PKP\linkAction\request\RemoteActionConfirmationModal;
@@ -106,6 +107,10 @@ class PublicationFormatGridCellProvider extends DataObjectGridCellProvider
                         return ['label' => '<a href="' . htmlspecialchars($remoteURL) . '" target="_blank">' . htmlspecialchars($data->getLocalizedName()) . '</a>' . '<span class="onix_code">' . $data->getNameForONIXCode() . '</span>'];
                     }
                     return ['label' => htmlspecialchars($data->getLocalizedName()) . '<span class="onix_code">' . $data->getNameForONIXCode() . '</span>'];
+                case 'language':
+                    return [
+                        'label' => Locale::getSubmissionLocaleDisplayNames([$data->getData('locale')], $this->getLocale())[$data->getData('locale')]
+                    ];
                 case 'isAvailable':
                     return ['status' => $data->getIsAvailable() ? 'completed' : 'new'];
                 case 'isComplete':
@@ -120,6 +125,10 @@ class PublicationFormatGridCellProvider extends DataObjectGridCellProvider
                 case 'name':
                     $fileNameGridColumn = new FileNameGridColumn(true, WORKFLOW_STAGE_ID_PRODUCTION);
                     return $fileNameGridColumn->getTemplateVarsFromRow($row);
+                case 'language':
+                    return [
+                        'label' => ''
+                    ];
                 case 'isComplete':
                     return ['status' => $proofFile->getViewable() ? 'completed' : 'new'];
             }
