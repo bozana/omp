@@ -286,6 +286,7 @@ class MonographONIX30XmlFilter extends NativeExportFilter
             $licenseOpts = Application::getCCLicenseOptions();
             $licenseUrl = $publication->getData('licenseUrl');
             if (array_key_exists($licenseUrl, $licenseOpts)) {
+                // TO-DO: get license name in pub format locale, then in pub locale
                 $licenseName = (__($licenseOpts[$licenseUrl], [], $pubLocale));
 
                 $epubLicenseNode = $doc->createElementNS($deployment->getNamespace(), 'EpubLicense');
@@ -321,6 +322,7 @@ class MonographONIX30XmlFilter extends NativeExportFilter
                 $titleElementNode->appendChild($this->buildTextNode($doc, 'PartNumber', $submission->getCurrentPublication()->getData('seriesPosition')));
             }
 
+            // TO-DO: get siries data in pub format locale, then in pub locale
             $seriesLocale = $pubLocale;
             // If the series title doesn't exist in the submission locale, use the press locale
             if ($series->getTitle($seriesLocale, false) == '') {
@@ -354,8 +356,14 @@ class MonographONIX30XmlFilter extends NativeExportFilter
 
         $productTitleDetailNode->appendChild($titleElementNode);
 
+<<<<<<< HEAD
         if ($publication->getData('prefix', $pubLocale)) {
             $titleElementNode->appendChild($this->buildTextNode($doc, 'TitlePrefix', $publication->getData('prefix', $pubLocale)));
+=======
+        // TO-DO: get publication prefix, title, subtitle data in pub format locale, then in pub locale
+        if (!$publication->getData('prefix', $pubLocale) || !$publication->getData('title', $pubLocale)) {
+            $titleElementNode->appendChild($this->buildTextNode($doc, 'TitleText', trim($publication->getData('prefix', $pubLocale) ?? $publication->getData('title', $pubLocale))));
+>>>>>>> 81bd699b2 (asdf)
         } else {
             $titleElementNode->appendChild($doc->createElementNS($deployment->getNamespace(), 'NoPrefix'));
         }
@@ -388,6 +396,7 @@ class MonographONIX30XmlFilter extends NativeExportFilter
             $role = array_key_exists($nameKey, $userGroupOnixMap) ? $userGroupOnixMap[$nameKey] : 'Z99'; // Z99 - unknown contributor type.
 
             $contributorNode->appendChild($this->buildTextNode($doc, 'ContributorRole', $role));
+            // TO-DO: get author data in pub format locale, then in pub locale
             $contributorNode->appendChild($this->buildTextNode($doc, 'PersonName', $author->getFullName(false, false, $pubLocale)));
             $contributorNode->appendChild($this->buildTextNode($doc, 'PersonNameInverted', $author->getFullName(false, true, $pubLocale)));
             $contributorNode->appendChild($this->buildTextNode($doc, 'NamesBeforeKey', $author->getGivenName($pubLocale)));
@@ -462,12 +471,14 @@ class MonographONIX30XmlFilter extends NativeExportFilter
             $subjectNode->appendChild($this->buildTextNode($doc, 'SubjectSchemeIdentifier', '12')); // 12 is BIC subject category code list.
             $subjectNode->appendChild($this->buildTextNode($doc, 'SubjectSchemeVersion', '2')); // Version 2 of ^^
 
+            // TO-DO: get subjects in pub format locale, then in pub locale
             $allSubjects = ($publication->getData('subjects')[$pubLocale]);
             $subjectNode->appendChild($this->buildTextNode($doc, 'SubjectCode', trim(join(', ', $allSubjects))));
             $descDetailNode->appendChild($subjectNode);
         }
 
         if ($publication->getData('keywords')) {
+            // TO-DO: get keywords in pub format locale, then in pub locale
             $allKeywords = ($publication->getData('keywords')[$pubLocale]);
             $keywordNode = $doc->createElementNS($deployment->getNamespace(), 'Subject');
             $keywordNode->appendChild($this->buildTextNode($doc, 'SubjectSchemeIdentifier', '20')); // Keywords
@@ -513,6 +524,7 @@ class MonographONIX30XmlFilter extends NativeExportFilter
         $collateralDetailNode = $doc->createElementNS($deployment->getNamespace(), 'CollateralDetail');
         $productNode->appendChild($collateralDetailNode);
 
+        // TO-DO: get abstract in pub format locale, then in pub locale
         $abstract = strip_tags($publication->getData('abstract', $pubLocale));
 
         $textContentNode = $doc->createElementNS($deployment->getNamespace(), 'TextContent');
@@ -537,6 +549,7 @@ class MonographONIX30XmlFilter extends NativeExportFilter
         $resourceVersionNode = $doc->createElementNS($deployment->getNamespace(), 'ResourceVersion');
         $supportingResourceNode->appendChild($resourceVersionNode);
         $resourceVersionNode->appendChild($this->buildTextNode($doc, 'ResourceForm', '01')); // Linkable resource
+        // TO-DO: get cover image url in pub format locale, then in pub locale
         $resourceVersionNode->appendChild($this->buildTextNode($doc, 'ResourceLink', $publication->getCoverImageUrl($context->getId(), $pubLocale)));
 
         /* --- Publishing Detail --- */
