@@ -63,7 +63,7 @@ class PublicationFormatForm extends Form
         $this->addCheck(new \PKP\form\validation\FormValidatorCSRF($this));
 
         // Ensure a locale is provided and valid:
-        // Publication format locale can be one of the context's supported locales, as well as
+        // Publication format locale can be one of the context's supported submission locales, as well as
         // the existing monograph locale or the existing local of this publication format.
         $locales = collect(Application::get()->getRequest()->getContext()->getSupportedSubmissionLocales())
             ->concat([$monograph->getData('locale')])
