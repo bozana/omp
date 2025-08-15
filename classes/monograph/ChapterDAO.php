@@ -400,7 +400,7 @@ class ChapterDAO extends \PKP\db\DAO implements PKPPubIdPluginDAO
      * Get the DOI object found for the same chapter (with the same source_chapter_id)
      * in the current publication.
      */
-    public function getCurrentPublicatinChapterDoi(Publication $currentPublication, Chapter $chapter): ?Doi
+    public function getCurrentPublicationChapterDoi(Publication $currentPublication, Chapter $chapter): ?Doi
     {
         $doiId = DB::table('submission_chapters')
             ->select('doi_id')

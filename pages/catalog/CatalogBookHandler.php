@@ -186,7 +186,7 @@ class CatalogBookHandler extends Handler
                     $chapterDoiObject = $chapterDao->getMinorVersionsDoi($this->publication, $this->chapter);
                 } else {
                     if ($this->publication->getId() !== $submission->getCurrentPublication()->getId()) {
-                        $chapterDoiObject = $chapterDao->getCurrentPublicatinChapterDoi($submission->getCurrentPublication(), $this->chapter);
+                        $chapterDoiObject = $chapterDao->getCurrentPublicationChapterDoi($submission->getCurrentPublication(), $this->chapter);
                     }
                 }
             }
