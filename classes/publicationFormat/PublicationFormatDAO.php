@@ -20,6 +20,7 @@ namespace APP\publicationFormat;
 
 use APP\facades\Repo;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\LazyCollection;
 use PKP\db\DAO;
 use PKP\db\DAOResultFactory;
 use PKP\plugins\Hook;
@@ -533,5 +534,34 @@ class PublicationFormatDAO extends DAO implements RepresentationDAOInterface
             $affectedRows += $this->deletePubId($format->getId(), $pubIdType);
         }
         return $affectedRows;
+    }
+
+    /**
+     * Get all minor versions' publication formats of the same submission, that are
+     * with the same version stage, version major and DOI ID
+     * as the given publication format
+     *
+     * @return LazyCollection<int,PublicationFormat>
+     */
+    public function getMinorVersionsWithSameDoi(PublicationFormat $publicationFormat): LazyCollection
+    {
+        $publication = Repo::publication()->get($publicationFormat->getData('publicationId'));
+        $allMinorVersionIds = Repo::publication()->getCollector()
+            ->filterBySubmissionIds([$publication->getData('submissionId')])
+            ->filterByVersionStage($publication->getData('versionStage'))
+            ->filterByVersionMajor($publication->getData('versionMajor'))
+            ->getIds()
+            ->values()
+            ->toArray();
+        $rows = DB::table('publication_formats')
+            ->select('*')
+            ->whereIn('publication_id', $allMinorVersionIds)
+            ->where('doi_id', '=', $publicationFormat->getData('doiId'))
+            ->get();
+        return LazyCollection::make(function () use ($rows) {
+            foreach ($rows as $row) {
+                yield $row->chapter_id = $this->_fromRow((array) $row);
+            }
+        });
     }
 }

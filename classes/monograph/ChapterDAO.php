@@ -22,6 +22,7 @@ namespace APP\monograph;
 use APP\facades\Repo;
 use APP\publication\Publication;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\LazyCollection;
 use PKP\db\DAOResultFactory;
 use PKP\doi\Doi;
 use PKP\plugins\Hook;
@@ -408,5 +409,35 @@ class ChapterDAO extends \PKP\db\DAO implements PKPPubIdPluginDAO
             ->get();
 
         return $doiId ? Repo::doi()->get((int) $doiId) : null;
+    }
+
+    /**
+     * Get all minor versions chapters of the same submission, that are
+     * with the same version stage, version major and DOI ID
+     * as the given chpater
+     *
+     * @return LazyCollection<int,Chapter>
+     */
+    public function getMinorVersionsWithSameDoi(Chapter $chapter): LazyCollection
+    {
+        $publication = Repo::publication()->get($chapter->getData('publicationId'));
+        $allMinorVersionIds = Repo::publication()->getCollector()
+            ->filterBySubmissionIds([$publication->getData('submissionId')])
+            ->filterByVersionStage($publication->getData('versionStage'))
+            ->filterByVersionMajor($publication->getData('versionMajor'))
+            ->getIds()
+            ->values()
+            ->toArray();
+        $rows = DB::table('submission_chapters')
+            ->select('*')
+            ->whereIn('publication_id', $allMinorVersionIds)
+            ->where('source_chapter_id', '=', $chapter->getData('sourceChapterId'))
+            ->where('doi_id', '=', $chapter->getData('doiId'))
+            ->get();
+        return LazyCollection::make(function () use ($rows) {
+            foreach ($rows as $row) {
+                yield $row->chapter_id = $this->_fromRow((array) $row);
+            }
+        });
     }
 }
